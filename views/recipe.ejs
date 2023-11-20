@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= recipe.title %></title>
+</head>
+<body>
+    <h1><%= recipe.title %></h1>
+    <% if(recipe.image) { %>
+        <img src="<%= recipe.image %>" alt="<%= recipe.title %>" style="max-width: 100%;">
+    <% } %>
+
+    <div>
+        <strong>Name:</strong> 
+        <a target="_blank" href="<%= recipe.sourceUrl %>">
+            <%= recipe.title %>
+        </a>
+    </div>
+    <div>
+        <strong>Ingredients needed:</strong>
+        <div class="ingredients">
+            <% recipe.extendedIngredients.forEach(function(ingredient, index) { %>
+                <span><%= ingredient.name %><%= index !== recipe.extendedIngredients.length - 1 ? ', ' : '' %></span>
+            <% }); %>
+        </div>
+    </div>
+
+    <h2>Instructions</h2>
+    <% if(recipe.analyzedInstructions.length > 0) { %>
+        <% recipe.analyzedInstructions.forEach(function(instruction) { %>
+            <ol>
+                <% instruction.steps.forEach(function(step) { %>
+                    <li><%= step.step %></li>
+                <% }); %>
+            </ol>
+        <% }); %>
+    <% } else { %>
+        <p>No detailed instructions provided.</p>
+    <% } %>
+
+    <h2>Details</h2>
+    <ul>
+        <li><strong>Cooking Time:</strong> <%= recipe.readyInMinutes %> minutes</li>
+        <li><strong>Servings:</strong> <%= recipe.servings %></li>
+        <li><strong>Health Score:</strong> <%= recipe.healthScore %></li>
+        <li><strong>Source:</strong> <a href="<%= recipe.sourceUrl %>"><%= recipe.sourceName %></a></li>
+    </ul>
+
+</body>
+</html>
